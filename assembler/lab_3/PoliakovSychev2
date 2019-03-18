@@ -1,0 +1,44 @@
+    DOSSEG
+   .MODEL TINY
+   .STACK 100h
+   .DATA
+   A DW 1, 12, 123, 2, 325
+   .CODE
+   mov    ax, @Data
+   mov    ds, ax                  
+   mov    es, ax                       
+                                     
+   cld
+   lea    si, A
+   mov    bx, 10
+   mov    di, 0
+   mov    cx, 5
+m1:   
+   mov    ax, [si]
+   add    si, 2
+m2:   
+   mov    dx, 0
+   div    bx
+   push   dx
+   inc    di
+   cmp    ax, 0
+   jnz    m2
+m3:
+   pop    dx
+   add    dl, 30h
+   mov    ah, 2                    
+   
+   int    21h
+   dec    di
+   jnz    m3
+   
+   mov    ah, 2
+   mov    dx, 20h
+   int    21h
+   
+   loop   m1
+                       
+   mov    ah, 4ch              ; функция DOS завершения
+                                     ; программы
+   int    21h                     ; завершить программу
+   END

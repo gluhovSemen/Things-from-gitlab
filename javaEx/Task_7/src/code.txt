@@ -1,0 +1,46 @@
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Task_7_1 {
+	final static String[] keyWords = { "abstract", "continue", "for", "new", "switch", "assert", "default", "goto", "package",
+			"synchronized", "boolean", "do", "if", "private", "this", "break", "double", "implements", "protected",
+			"throw", "byte", "else", "import", "public", "throws", "case", "enum", "instanceof", "return", "transient",
+			"catch", "extends", "int", "short", "try", "char", "final", "interface", "static", "void", "class",
+			"finally", "long", "strictfp", "volatile", "const", "float", "native", "super", "while" };
+
+	public static void main(String[] args) {
+		try (FileWriter writer = new FileWriter("notes3.txt", false)) {
+			try (FileReader reader = new FileReader("/home/vasily/workspace/politekEx/src/text.txt"))// посимвольно
+			{
+				// читаем посимвольно
+				char c;
+				String s = "";
+				int kwa = 0;// Key Words Amount
+				while ((c = (char) reader.read()) != -1) {
+
+					if (c != '\n')
+						s += c;
+					else {
+						for(int i = 0; i < keyWords.length && s != keyWords[i]; i ++) {	
+							if(s != keyWords[i])
+								System.out.println(keyWords[i]);
+							kwa ++;
+						}
+						System.out.println(s);
+						s = "";
+					}
+
+				}
+			} catch (IOException ex1) {
+
+				System.out.println(ex1.getMessage());
+			}
+		} catch (IOException ex2) {
+
+			System.out.println(ex2.getMessage());
+		}
+	}
+
+}
